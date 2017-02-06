@@ -291,3 +291,5 @@ function checkForWin () {
 		}, 250);
 	}
 }
+
+// still can't get intervals to work. not sure why it won't clear.
