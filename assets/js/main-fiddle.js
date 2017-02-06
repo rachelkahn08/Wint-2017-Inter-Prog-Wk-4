@@ -74,18 +74,6 @@ function checkForMatch ( card1, card2 ) {
 	checkForWin();
 }
 
-function checkForWin () {
-	var totalMatched = document.querySelectorAll(".matched").length;
-	var totalCards = document.querySelectorAll(".card").length;
-	if ( totalMatched == totalCards ) {
-		setTimeout( function() {
-			runStopwatch();
-			createAnotherModal();
-
-		}, 250);
-	}
-}
-
 
 function setTable() {
 	var totalCards = 8;
@@ -183,32 +171,23 @@ minutes = 00;
 seconds = 00;
 tenths = 00;
 
+var stopwatchInterval;
 
-
-function runStopwatch (stopwatch) {	
-	var stopwatch = "";
+function runStopwatch (sw) {	
 	var tenthsContainer = document.querySelector(".tenths");
 	var secondsContainer = document.querySelector(".seconds");
 	var minutesContainer = document.querySelector(".minutes");
-
-	if ( stopwatch.interval ) {
-		clearInterval( stopwatch.interval );
-	} else	{ stopwatch.interval = setInterval( function () {
-
 		tenths++;
-
 		if ( tenths < 10 ) {
 			tenthsContainer.innerHTML = "." + tenths;
-		
 		} else if (tenths > 9 ) {
 			tenths = 0;
 			tenthsContainer.innerHTML = ":0";
 			seconds++;
-		}	
+		}
 
 		if (seconds < 10 ) {
-			secondsContainer.innerHTML = ":0" + seconds;
-			
+			secondsContainer.innerHTML = ":0" + seconds;			
 		}	else if ( seconds < 60 ) {
 			secondsContainer.innerHTML = ":" + seconds;
 		}	else if ( seconds > 59 ) {
@@ -223,15 +202,11 @@ function runStopwatch (stopwatch) {
 		} else if (tenths > 9 ) {
 			minutesContainer.innerHTML = minutes;
 			seconds++;
-		}	
-		}, 100); 
-	}
-
+		}		 	
 }
 
 
 function createModal (modal) {
-// start modal function
 
 	modal = document.createElement("div");
 		modal.setAttribute( "class", "modal" );
@@ -256,9 +231,8 @@ function createFirstModal () {
 		button.addEventListener("click", playGame);
 
 	var stopwatch = createStopwatch();
-	stopwatch.setAttribute( "class", "stopwatch" );
-
-	modal.appendChild(stopwatch);
+		stopwatch.setAttribute( "class", "stopwatch" );
+		modal.appendChild(stopwatch);
 }
 
 window.addEventListener( "load", createFirstModal )
@@ -266,7 +240,6 @@ window.addEventListener( "load", createFirstModal )
 function playGame () {
 	removeModal();
 	gameStopwatch();
-	runStopwatch(); 
 	setTable();	
 }
 
@@ -276,22 +249,21 @@ function removeModal () {
 	killmodal.removeChild(modal);
 }
 
-function removeCards () {
-	//select all cards
-	//remove all cards
-	//probably a while
-}
+// function removeCards () {
+// 	//select all cards
+// 	//remove all cards
+// 	//probably a while
+// }
 
 function gameStopwatch () {
 	var stopwatch = createStopwatch();
-	document.body.appendChild(stopwatch);
-	stopwatch.setAttribute("class", "stopwatch2");
+		document.body.appendChild(stopwatch);
+		stopwatch.setAttribute("class", "stopwatch2");
+	var stopwatchInterval = setInterval(runStopwatch, 100);
 }
 
+
 function createAnotherModal () {
-	// clearInterval(STOPWATCH STUFF)
-	stopwatch = document.querySelector(".stopwatch2")
-	runStopwatch(stopwatch);
 
 	var modal = createModal(); 
 		message.innerHTML = "Play another round?";
@@ -300,25 +272,22 @@ function createAnotherModal () {
 	button.innerHTML = "START";
 		modal.appendChild(button);
 		button.addEventListener("click", playAnotherGame);
-
 }
 
 function playAnotherGame () {
 	document.body.innerHTML = [];
 	// clear away old cards
 	gameStopwatch();
-	setTable();
-	
+	setTable();	
 }
 
-
-function modalStopwatch () {
-	var stopwatch = document.querySelector(".stopwatch", ".stopwatch2");
-		
-
-	var modal = document.querySelector(".modal");
-		modal.appendChild(stopwatch);
+function checkForWin () {
+	var totalMatched = document.querySelectorAll(".matched").length;
+	var totalCards = document.querySelectorAll(".card").length;
+	if ( totalMatched == totalCards ) {
+		var stopwatchInterval = clearInterval(runStopwatch);
+		setTimeout( function() {
+			createAnotherModal();
+		}, 250);
+	}
 }
-
-
-
