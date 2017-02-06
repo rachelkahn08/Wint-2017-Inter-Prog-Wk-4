@@ -79,7 +79,9 @@ function checkForWin () {
 	var totalCards = document.querySelectorAll(".card").length;
 	if ( totalMatched == totalCards ) {
 		setTimeout( function() {
+			runStopwatch();
 			createAnotherModal();
+
 		}, 250);
 	}
 }
@@ -181,41 +183,49 @@ minutes = 00;
 seconds = 00;
 tenths = 00;
 
+
+
 function runStopwatch (stopwatch) {	
-	var stopwatch = document.querySelectorAll(".stopwatch", ".stopwatch2");
+	var stopwatch = "";
 	var tenthsContainer = document.querySelector(".tenths");
 	var secondsContainer = document.querySelector(".seconds");
 	var minutesContainer = document.querySelector(".minutes");
 
-	tenths++;
+	if ( stopwatch.interval ) {
+		clearInterval( stopwatch.interval );
+	} else	{ stopwatch.interval = setInterval( function () {
 
-	if ( tenths < 10 ) {
-		tenthsContainer.innerHTML = "." + tenths;
-	
-	} else if (tenths > 9 ) {
-		tenths = 0;
-		tenthsContainer.innerHTML = ":0";
-		seconds++;
-	}	
+		tenths++;
 
-	if (seconds < 10 ) {
-		secondsContainer.innerHTML = ":0" + seconds;
+		if ( tenths < 10 ) {
+			tenthsContainer.innerHTML = "." + tenths;
 		
-	}	else if ( seconds < 60 ) {
-		secondsContainer.innerHTML = ":" + seconds;
-	}	else if ( seconds > 59 ) {
-		seconds = 0;
-		minutes++;
-		minutesContainer.innerHTML = minutes;
-	}
+		} else if (tenths > 9 ) {
+			tenths = 0;
+			tenthsContainer.innerHTML = ":0";
+			seconds++;
+		}	
 
-	if ( minutes < 10 ) {
-		minutesContainer.innerHTML = "0" + minutes;
-	
-	} else if (tenths > 9 ) {
-		minutesContainer.innerHTML = minutes;
-		seconds++;
-	}	
+		if (seconds < 10 ) {
+			secondsContainer.innerHTML = ":0" + seconds;
+			
+		}	else if ( seconds < 60 ) {
+			secondsContainer.innerHTML = ":" + seconds;
+		}	else if ( seconds > 59 ) {
+			seconds = 0;
+			minutes++;
+			minutesContainer.innerHTML = minutes;
+		}
+
+		if ( minutes < 10 ) {
+			minutesContainer.innerHTML = "0" + minutes;
+		
+		} else if (tenths > 9 ) {
+			minutesContainer.innerHTML = minutes;
+			seconds++;
+		}	
+		}, 100); 
+	}
 
 }
 
@@ -256,7 +266,7 @@ window.addEventListener( "load", createFirstModal )
 function playGame () {
 	removeModal();
 	gameStopwatch();
-	setInterval(runStopwatch, 100); 
+	runStopwatch(); 
 	setTable();	
 }
 
@@ -273,7 +283,6 @@ function removeCards () {
 }
 
 function gameStopwatch () {
-
 	var stopwatch = createStopwatch();
 	document.body.appendChild(stopwatch);
 	stopwatch.setAttribute("class", "stopwatch2");
@@ -281,8 +290,8 @@ function gameStopwatch () {
 
 function createAnotherModal () {
 	// clearInterval(STOPWATCH STUFF)
-
-	modalStopwatch();
+	stopwatch = document.querySelector(".stopwatch2")
+	runStopwatch(stopwatch);
 
 	var modal = createModal(); 
 		message.innerHTML = "Play another round?";
@@ -304,8 +313,12 @@ function playAnotherGame () {
 
 
 function modalStopwatch () {
-	var stopwatch = document.querySelector(".stopwatch2");
-	stopwatch.setAttribute("class", "stopwatch")
-	stopwatch.classList.remove(".stopwatch2");
+	var stopwatch = document.querySelector(".stopwatch", ".stopwatch2");
+		
 
+	var modal = document.querySelector(".modal");
+		modal.appendChild(stopwatch);
 }
+
+
+
