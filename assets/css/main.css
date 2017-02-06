@@ -1,0 +1,108 @@
+
+html, body {
+    background-color: green;
+}
+
+body {
+	margin: 0 auto;
+	width: 950px;
+}
+
+.card {
+    width: 140px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: red;
+    border: 15px solid white;
+    color: transparent;
+    font-size: 50pt;
+    font-family: helvetica;
+    float: left;
+    margin: 10px;
+}
+
+.card.flipped,
+.card.matched {
+    background-color: white;
+    color: black;
+}
+
+.card.matched {
+    opacity: 0.5;
+}
+
+.card.flipped[data-color="red"],
+.card.matched[data-color="red"] {
+    color: red;
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: grey;
+    border-style: outset;
+    border-width: 5px;
+    border-color: blue;
+    height: 400px;
+    width: 650px;
+    font-family: "Helvetica";
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+}
+
+.stopwatch {
+    position: absolute;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: 20%;
+}
+
+.minutes, .seconds, .tenths {
+    position: relative;
+    display: inline;
+    font-size: 3em;
+}
+
+.message {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size:1.5em;
+}
+
+.button {
+    position: absolute;
+    margin-left: 50%;
+    bottom: 50px;
+    transform: translate(-50%);
+    border-style: solid;
+    border-width: 3px;
+    border-style: outset;
+    border-color: white;
+    padding: 20px;
+    background: green;
+}
+
+.stopwatch2 {
+    position: relative;
+    width: 140px;
+    height: 40px;
+    margin-top: 10px;
+    left: 50%;
+    transform: translate(-87px);
+    font-family: "Helvetica";
+    font-size: .5em;
+    text-align: center;
+    color: white;
+    background: grey;
+    border-width: 3px;
+    border-style: solid;
+    border-color: white;
+    padding-top: 20px;
+
+}
